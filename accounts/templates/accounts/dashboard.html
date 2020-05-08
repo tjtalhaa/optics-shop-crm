@@ -11,16 +11,18 @@
 		<h5 class="ml-4">CUSTOMERS:</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>
-			<table class="table table-sm">
+			<a class="btn btn-primary  btn-sm btn-block" href="#">Create Customer</a>
+			<table class="table table-sm table-striped table-hover">
+				<thead class="table-info">
 				<tr>
+					<th>Profile </th>
 					<th>Customer</th>
 					<th>Phone</th>
 				</tr>
-
+			</thead>
 				{% for customer in customers %}
 					<tr>
-
+						<td><a href=" {% url 'customer' customer.id %} ">view</a> </td>
 						<td>{{customer.name}}</td>
 						<td>{{customer.phone}}</td>
 					</tr>
@@ -34,23 +36,24 @@
 		<h5 class="ml-4">LAST 5 ORDERS</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create Order</a>
-			<table class="table table-sm">
-				<tr>
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_order' %}">Create Order</a>
+			<table class="table table-sm table-striped table-hover">
+				<thead class="table-info">
+				<tr >
 					<th>Product</th>
 					<th>Date Orderd</th>
 					<th>Status</th>
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
-
+			</thead>
 				{% for order in orders %}
-					<tr>
+					<tr class="table-striped table-hover">
 						<td>{{order.product}}</td>
 						<td>{{order.date_created}}</td>
 						<td>{{order.status}}</td>
-						<td><a href="">Update</a></td>
-						<td><a href="">Delete</a></td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
 
 					</tr>
 				{% endfor %}

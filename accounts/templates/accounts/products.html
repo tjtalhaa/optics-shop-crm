@@ -10,13 +10,14 @@
 					<h5>Products</h5>
 				</div>
 				<div class="card card-body">
-					<table class="table">
+					<table class="table table-sm table-striped table-hover">
+						<thead class="table-info">
 						<tr>
 							<th>Product</th>
 							<th>Category</th>
 							<th>Price</th>
 						</tr>
-
+						</thead>
 						{% for i in products %}
 							<tr>
 								<td>{{i.name}}</td>
