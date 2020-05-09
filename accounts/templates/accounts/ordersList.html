@@ -1,0 +1,101 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<br>
+
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+
+			<form method="get">
+				{{myFilterw.form }}
+			
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+
+		</div>
+	</div>
+	
+</div>
+
+<br>
+<br>
+
+<div class="row">
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="total-orders">
+			  	<div class="card-header">
+			  		<h5 class="card-title">In Workshop</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{InWorkshop}}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="orders-delivered">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Orders Ready</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{ready}}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="orders-pending">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Orders Delivered</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{delivered}}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<br>
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm table-striped table-hover">
+				<thead class="table-info mb-25">
+
+				    <tr >
+						<th>Product</th>
+						<th>Note</th>
+						<th>Date Orderd</th>
+						<th>Status</th>
+						<th>Update</th>
+						<th>Remove</th>
+					</tr>
+
+				</thead>
+				{% for order in orders %}
+
+				<tr>
+					<td> {{order.product}} </td>
+					<td> {{order.note}} </td>
+					<td> {{order.date_created}} </td>
+					<td> {{order.status}} </td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
+					<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
+				</tr>
+
+				{% endfor%}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}
