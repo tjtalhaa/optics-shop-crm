@@ -13,7 +13,7 @@ from django.contrib.auth.models import Group
 
 # Create your views here.
 from .models import *
-from .forms import OrderForm, CreateUserForm
+from .forms import OrderForm, CreateUserForm, CustomerForm
 from .filter import OrderFilter
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
@@ -30,6 +30,9 @@ def registerpage(request):
 
             group = Group.objects.get(name='customer')
             user.groups.add(group)
+
+            Customer.objects.create(
+                user=user, name=user.username, email=user.email)
 
             messages.success(request, 'Account was created for ' + username)
 
@@ -82,9 +85,34 @@ def home(request):
     return render(request, 'accounts/dashboard.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
 def userpage(request):
-    context = {}
+    orders = request.user.customer.order_set.all()
+
+    total_orders = orders.count()
+    delivered = orders.filter(status='Delivered').count()
+    ready = orders.filter(status='Ready').count()
+
+    print('ORDERS:', orders)
+
+    context = {'orders': orders, 'total_orders': total_orders,
+               'delivered': delivered, 'ready': ready}
     return render(request, 'accounts/userpage.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def accountsetting(request):
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+    context = {'form': form}
+    return render(request, 'accounts/account_setting.html', context)
 
 
 @login_required(login_url='login')
@@ -118,9 +146,9 @@ def create_order(request, pk):
         Customer, Order, fields=('product', 'status'), extra=10)
     customer = Customer.objects.get(id=pk)
     formset = OrderFormSet(queryset=Order.objects.none(), instance=customer)
-    #form = OrderForm(initial={'customer':customer})
+    # form = OrderForm(initial={'customer':customer})
     if request.method == 'POST':
-        #print('Printing POST:', request.POST)
+        # print('Printing POST:', request.POST)
         form = OrderForm(request.POST)
         formset = OrderFormSet(request.POST, instance=customer)
         if formset.is_valid():
