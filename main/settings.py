@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'crispy_forms',
     'accounts.apps.AccountsConfig',
 
     'django_filters',
@@ -130,3 +130,14 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'tjtalhakhalid@gmail.com'
+EMAIL_HOST_PASSWORD = 'jiymmfvremqxzndx'
+EMAIL_USE_TLS = True
+
+
+
+CRISPY_TEMPLATE_PACK = 'uni_form'
