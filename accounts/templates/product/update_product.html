@@ -1,5 +1,7 @@
 {%  extends 'accounts/main.html' %}
 {% load static %}
+{% block title %} | Update Product {% endblock %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 
@@ -9,11 +11,10 @@
 
 			<form action="" method="POST">
 				{% csrf_token %}
-				{{ form.management_form }}
-				{% for field in form %}
-					{{field}}
+				
+					{{form | crispy}}
 					<hr>
-				{% endfor %}
+			
 				
 				<input class="btn btn-sm btn-info" type="submit" name="Submit">
 			</form>

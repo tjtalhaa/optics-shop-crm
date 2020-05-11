@@ -1,0 +1,16 @@
+
+
+.abouttext{
+    font-weight: 400;
+    font-size: 2ch;
+    padding-top: 2em;
+}
+
+.sspadding{
+    padding: 0 10px;
+}
+
+.p{
+    text-align: justify;
+    text-justify: inter-word;
+}
